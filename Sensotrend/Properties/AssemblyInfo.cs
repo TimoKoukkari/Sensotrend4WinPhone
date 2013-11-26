@@ -9,7 +9,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Sensotrend")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Sensotrend")]
 [assembly: AssemblyProduct("Sensotrend")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
