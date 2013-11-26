@@ -35,9 +35,10 @@
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Top"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" Text="Glucose value" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
-            <TextBox x:Name="glucoseText" HorizontalAlignment="Left" Margin="0,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="435" Style="{StaticResource TextBoxStyle}" InputScope="Number" TextChanged="glucoseText_TextChanged"/>
+            <TextBox x:Name="glucoseText" HorizontalAlignment="Left" Margin="0,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="309" Style="{StaticResource TextBoxStyle}" InputScope="Number" TextChanged="glucoseText_TextChanged"/>
             <Button x:Name="okButton" Content="OK" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="Button_Click" IsEnabled="False"/>
             <Button Content="Cancel" HorizontalAlignment="Left" Margin="285,515,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="Button_Click_1"/>
+            <TextBlock HorizontalAlignment="Left" Margin="314,315,0,0" TextWrapping="Wrap" Text="mmol/l" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
         </Grid>
     </Grid>
 
