@@ -8,7 +8,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <Style x:Name="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#FF1DD7E0" />
+            <Setter Property="Background" Value="#FF5c89c7" />  <!--Sensotrend color R:92 G:137 B:199-->
             <Setter Property="FontSize" Value="40" />
         </Style>
         <Style x:Name="TextBlockStyle" TargetType="TextBlock">
@@ -16,7 +16,7 @@
         </Style>
         <Style x:Name="TextBoxStyle" TargetType="TextBox">
             <Setter Property="FontSize" Value="40" />
-            <Setter Property="Background" Value="#FF1DD7E0" />
+            <Setter Property="Background" Value="#FF5c89c7" />
         </Style>
     </Application.Resources>
 
