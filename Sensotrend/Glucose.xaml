@@ -24,7 +24,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,635">
             <TextBlock Text="Sensotrend" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="Glucose" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="Verensokeri" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -32,12 +32,12 @@
             <Button Content="Button" HorizontalAlignment="Left" Margin="446,74,0,0" VerticalAlignment="Top"/>
             <toolkit:DatePicker HorizontalAlignment="Left" x:Name="datePicker1" VerticalAlignment="Top" IsEnabled="True" Margin="0,42,0,0" ValueStringFormat="{}{0:dd.MM.yyyy}" Width="435" />
             <toolkit:TimePicker HorizontalAlignment="Left" x:Name="timePicker1" VerticalAlignment="Top" IsEnabled="True" Margin="0,146,0,0" Width="436" ValueStringFormat="{}{0:HH:mm:ss}" />
-            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" Text="Glucose value" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Päivämäärä" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="Kellonaika" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" Text="Sokeriarvo" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
             <TextBox x:Name="glucoseText" HorizontalAlignment="Left" Margin="0,276,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="309" Style="{StaticResource TextBoxStyle}" InputScope="Number" TextChanged="glucoseText_TextChanged"/>
             <Button x:Name="okButton" Content="OK" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="Button_Click" IsEnabled="False"/>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="285,515,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="Button_Click_1"/>
+            <Button Content="Peru" HorizontalAlignment="Left" Margin="285,515,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="Button_Click_1"/>
             <TextBlock HorizontalAlignment="Left" Margin="314,315,0,0" TextWrapping="Wrap" Text="mmol/l" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
         </Grid>
     </Grid>
