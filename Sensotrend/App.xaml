@@ -1,0 +1,30 @@
+﻿<Application 
+    x:Class="Sensotrend.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <Style x:Name="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF1DD7E0" />
+            <Setter Property="FontSize" Value="40" />
+        </Style>
+        <Style x:Name="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="40" />
+        </Style>
+        <Style x:Name="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="Background" Value="#FF1DD7E0" />
+        </Style>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
