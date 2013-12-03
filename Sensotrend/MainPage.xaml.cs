@@ -21,7 +21,6 @@ namespace Sensotrend
         {
             InitializeComponent();
 
-            // Open connection to Taltioni
 
         }
 
@@ -44,6 +43,12 @@ namespace Sensotrend
             base.OnNavigatedFrom(e);
 
             // Close connection to Taltioni
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
+
         }
     }
 }

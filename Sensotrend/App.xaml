@@ -53,7 +53,7 @@
             </Grid>
         </ControlTemplate>
         
-        <sys:String x:Key="appName">sensotrend</sys:String>
+        <sys:String x:Key="appName">Sensotrend</sys:String>
         
     </Application.Resources>
 
