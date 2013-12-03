@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Sensotrend
 {
@@ -17,12 +18,34 @@ namespace Sensotrend
         private const string OAuthVersion = "2.0";
 
         // OAuth signature method
-        private const string Hmacsha1SignatureType = "HMAC-SHA1";
+        //private const string Hmacsha1SignatureType = "HMAC-SHA1";
 
-        private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
-        private const string AUTHORIZATION_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/Index";
-        private const string TOKEN_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
+        //private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
+        //private const string AUTHORIZATION_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/Index";
+        //private const string TOKEN_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
 
+        //private const string AUTHORIZATION_URI = "https://asiakastesti.taltioni.fi/Authorize";
+        //private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/RequestToken";
+
+        private const string AUTHORIZATION_URI = "https://asiakastesti.taltioni.fi/OAuth/Index";
+        private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
+        private const string REDIRECT_URI = "http://localhost:8080/Moves2Taltioni/Authentication";
+        private const string CLIENT_ID =  "testipalvelu1_OAuth";
+        //private const string CLIENT_ID = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
+
+           
+        private const string GRANT_TYPE_KEY = "grant_type";
+        private const string AUTH_CODE_KEY = "code";
+        private const string CLIENT_ID_KEY =  "client_id";
+        private const string RESPONSE_TYPE_KEY = "response_type";
+        private const string ACCESS_TOKEN_KEY = "access_token";
+        private const string REDIRECT_URI_KEY = "redirect_uri";
+        
+        private string authCode;
+        private string accessToken;
+
+        /*
+         
         private const string OAuthConsumerKeyKey = "oauth_consumer_key";
         private const string OAuthVersionKey = "oauth_version";
         private const string OAuthSignatureMethodKey = "oauth_signature_method";
@@ -40,11 +63,23 @@ namespace Sensotrend
 
         private const string ConsumerKey = "testipalvelu1_OAuth"; //"jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
         private const string ConsumerSecret = "I5jrWs3+05AnaEkNtwYrhCHzXtCRmXkd";
+        */
 
         public Page1()
         {
             InitializeComponent();
 
+            // Create authorization url for Taltioni:
+            Uri loginUrl = new Uri(AUTHORIZATION_URI + "?response_type=code" +
+                "&client_id=" + CLIENT_ID +
+                "&redirect_uri=" + REDIRECT_URI);
+                
+            // Browser navigates to the authorization url
+           // Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
+            AuthenticationBrowser.Visibility = Visibility.Visible;
+            AuthenticationBrowser.Navigate(loginUrl);
+
+            /* Twitter specific stuff, commented out:
             // Create the request to get a request token and its secret
             WebRequest request = CreateRequest("POST", AUTHORIZATION_LOCATION);
             request.BeginGetResponse(result =>
@@ -75,6 +110,103 @@ namespace Sensotrend
                     Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve request token"));
                 }
             }, request);
+            */
+        }
+
+
+        private void BrowserLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            // If we have come back from the twitter authorize page
+            //if (e.Uri.AbsoluteUri.ToLower().Replace("https://", "http://") == AUTHORIZATION_URI)
+            //Taltioni:
+            string uriStr = e.Uri.AbsoluteUri.ToLower().ToString();
+            if (uriStr.Contains("authcallback"))
+            {
+                AuthenticationBrowser.Visibility = Visibility.Collapsed;
+
+
+                // TO-DO: find the code parameter from uriStr and save it to authCode
+
+                if (!string.IsNullOrEmpty(authCode))
+                {
+                    RetrieveAccessToken();
+                }
+
+                /*
+                // Parse the verifier pin from the authorize page's XML content
+                var htmlString = AuthenticationBrowser.SaveToString();
+
+                // Find the code element and extract the pin from it
+                var pinFinder = new Regex(@"<code>([A-Za-z0-9_]+)</code>", RegexOptions.IgnoreCase);
+
+                var match = pinFinder.Match(htmlString);
+
+                if (match.Success)
+                {
+                    authCode = match.Groups[1].Value;
+
+                    // If we've got the verifier pin then next get the access token
+                    if (!string.IsNullOrEmpty(authCode))
+                    {
+                        RetrieveAccessToken();
+                    }
+                }
+                */
+
+                if (string.IsNullOrEmpty(authCode))
+                {
+                    Dispatcher.BeginInvoke(() => MessageBox.Show("Authorization denied by user"));
+                }
+
+                // Make sure pin is reset to null
+                authCode = null;
+            }
+            else
+            {
+                if (AuthenticationBrowser.Visibility == Visibility.Collapsed)
+                {
+                    AuthenticationBrowser.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        // When we have got the verifier pin we can request the access token.
+        // Sends a POST to oauth/access_token, extracts the access token from the response
+        // and displays the user id and screen name from the response as well.
+        public void RetrieveAccessToken()
+        {
+            var request = CreateTokenRequest();
+
+            request.BeginGetResponse(result =>
+            {
+                try
+                {
+                    var req = result.AsyncState as HttpWebRequest;
+
+                    if (req == null)
+                        throw new ArgumentNullException("result", "Request is null");
+
+                    using (var resp = req.EndGetResponse(result))
+                    using (var strm = resp.GetResponseStream())
+                    using (var reader = new StreamReader(strm))
+                    {
+                        var responseText = reader.ReadToEnd();
+
+                        var userInfo = ExtractTokenInfo(responseText);
+
+                        Dispatcher.BeginInvoke(() =>
+                        {
+                            MessageBox.Show("Access granted");
+
+
+                        });
+                    }
+                }
+                catch
+                {
+                    Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve Access Token"));
+                }
+            }, request);
         }
 
         // Extracts access/request token and its secret from key/value pairs in input string
@@ -88,13 +220,13 @@ namespace Sensotrend
                                  let bits = pair.Split('=')
                                  where bits.Length == 2
                                  select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
-            token = responsePairs
-                          .Where(kvp => kvp.Key == OAuthTokenKey)
+            accessToken = responsePairs
+                          .Where(kvp => kvp.Key == ACCESS_TOKEN_KEY)
                           .Select(kvp => kvp.Value).FirstOrDefault();
 
-            tokenSecret = responsePairs
+/*            tokenSecret = responsePairs
                                       .Where(kvp => kvp.Key == OAuthTokenSecretKey)
-                                      .Select(kvp => kvp.Value).FirstOrDefault();
+                                      .Select(kvp => kvp.Value).FirstOrDefault();*/
 
             return responsePairs;
         }
@@ -103,40 +235,53 @@ namespace Sensotrend
         // The authorization header contains all the OAuth parameters including
         // the token (request or access) and its secret, the consumer key and consumer
         // secret for the application etc.
-        private WebRequest CreateRequest(string httpMethod, string requestUrl,
-            IDictionary<string, string> requestParameters = null)
+        private WebRequest CreateTokenRequest()
         {
+            
+            /*
             if (requestParameters == null)
             {
                 requestParameters = new Dictionary<string, string>();
             }
 
-            var secret = "";
+            //var secret = "";
 
+            
             if (!string.IsNullOrEmpty(token))
             {
                 requestParameters[OAuthTokenKey] = token;
                 secret = tokenSecret;
             }
+             */
 
-            if (!string.IsNullOrEmpty(pin))
+            /*
+            if (!string.IsNullOrEmpty(authCode))
             {
-                requestParameters[OAuthVerifierKey] = pin;
+                requestParameters[AUTH_CODE_KEY] = authCode;
+                requestParameters[GRANT_TYPE_KEY] = "authorization_code";
+                requestParameters[CLIENT_ID_KEY] = CLIENT_ID;
             }
+            */
+            // Format of the request for Taltioni:
+            //https://asiakastesti.taltioni.fi/RequestToken?grant_type=authorization_code&code=<code>&client_id=CLIENT_ID
+            Uri requestUrl = new Uri(REQUEST_TOKEN_URI + "?" + AUTH_CODE_KEY + "=" + authCode +
+            "&" + GRANT_TYPE_KEY + "=" + "authorization_code" +
+            "&" + CLIENT_ID_KEY + "=" + CLIENT_ID);
 
-            Uri url = new Uri(requestUrl);
+            /*
             string normalizedUrl = requestUrl;
 
             if (!string.IsNullOrEmpty(url.Query))
             {
                 normalizedUrl = requestUrl.Replace(url.Query, "");
             }
+            */
 
-            WebRequest request = WebRequest.CreateHttp(normalizedUrl);
-            request.Method = httpMethod;
+            WebRequest request = WebRequest.CreateHttp(requestUrl);
+            request.Method = "POST";
 
-            // Create the authorization header: Concatanate the request parameters including our signature and 
-            // add a "OAuth +" prefix
+            IDictionary<string, string> requestParameters = new Dictionary<string, string>();
+            // Create the authorization header. Does Taltioni require some sort of user name & password here?
             request.Headers[HttpRequestHeader.Authorization] = GenerateAuthorizationHeader(requestParameters);
 
             return request;
@@ -194,7 +339,9 @@ namespace Sensotrend
             return "OAuth " + paras;
         }
 
+        /*
         private static readonly Random Random = new Random();
+        
         public static string GenerateNonce()
         {
             // Random number between 123456 and 9999999
@@ -206,7 +353,7 @@ namespace Sensotrend
             var now = DateTime.UtcNow;
             TimeSpan ts = now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }
+        }*/
 
     }
 }
