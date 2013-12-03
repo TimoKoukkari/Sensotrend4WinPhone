@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Text;
+using System.IO;
 
 namespace Sensotrend
 {
@@ -19,6 +20,7 @@ namespace Sensotrend
         private const string Hmacsha1SignatureType = "HMAC-SHA1";
 
         private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
+        private const string AuthorizeUrl = "http://api.twitter.com/oauth/authorize";
 
         private const string OAuthConsumerKeyKey = "oauth_consumer_key";
         private const string OAuthVersionKey = "oauth_version";
@@ -44,8 +46,57 @@ namespace Sensotrend
 
             // Create the request to get a request token and its secret
             WebRequest request = CreateRequest("POST", RequestUrl);
+            request.BeginGetResponse(result =>
+            {
+                try
+                {
+                    HttpWebRequest req = result.AsyncState as HttpWebRequest;
+
+                    if (req == null)
+                        throw new ArgumentNullException("result", "Request parameter is null");
+
+                    WebResponse resp = req.EndGetResponse(result);
+                    Stream strm = resp.GetResponseStream();
+                    StreamReader reader = new StreamReader(strm);
+                    string responseText = reader.ReadToEnd();
+
+                    // Parse out the request token
+                    ExtractTokenInfo(responseText);
+
+                    // Create authorization url plus query using request token
+                    Uri loginUrl = new Uri(AuthorizeUrl + "?" + OAuthTokenKey + "=" + token);
+                    // Browser navigates to the authorization url
+                    Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
+
+                }
+                catch
+                {
+                    Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve request token"));
+                }
+            }, request);
         }
 
+        // Extracts access/request token and its secret from key/value pairs in input string
+        // read from response.
+        private IEnumerable<KeyValuePair<string, string>> ExtractTokenInfo(string responseText)
+        {
+            if (string.IsNullOrEmpty(responseText))
+                return null;
+
+            var responsePairs = (from pair in responseText.Split('&')
+                                 let bits = pair.Split('=')
+                                 where bits.Length == 2
+                                 select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
+            token = responsePairs
+                          .Where(kvp => kvp.Key == OAuthTokenKey)
+                          .Select(kvp => kvp.Value).FirstOrDefault();
+
+            tokenSecret = responsePairs
+                                      .Where(kvp => kvp.Key == OAuthTokenSecretKey)
+                                      .Select(kvp => kvp.Value).FirstOrDefault();
+
+            return responsePairs;
+        }
 
         // Creates a HTTP request complete with signed authorization header.
         // The authorization header contains all the OAuth parameters including
