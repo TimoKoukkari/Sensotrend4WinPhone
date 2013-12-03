@@ -21,6 +21,8 @@ namespace Sensotrend
 
         private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
         private const string AuthorizeUrl = "http://api.twitter.com/oauth/authorize";
+        private const string AUTHORIZATION_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/Index";
+        private const string TOKEN_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
 
         private const string OAuthConsumerKeyKey = "oauth_consumer_key";
         private const string OAuthVersionKey = "oauth_version";
@@ -37,7 +39,7 @@ namespace Sensotrend
         private string tokenSecret; // Ditto for the token's secret
         private string pin;
 
-        private const string ConsumerKey = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
+        private const string ConsumerKey = "testipalvelu1_OAuth"; //"jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
         private const string ConsumerSecret = "I5jrWs3+05AnaEkNtwYrhCHzXtCRmXkd";
 
         public Page1()
@@ -45,7 +47,7 @@ namespace Sensotrend
             InitializeComponent();
 
             // Create the request to get a request token and its secret
-            WebRequest request = CreateRequest("POST", RequestUrl);
+            WebRequest request = CreateRequest("POST", AUTHORIZATION_LOCATION);
             request.BeginGetResponse(result =>
             {
                 try
