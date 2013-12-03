@@ -12,34 +12,35 @@ using System.ComponentModel;
 
 namespace Sensotrend
 {
-    public partial class Glucose : PhoneApplicationPage
+    public partial class Insulin : PhoneApplicationPage
     {
         private PageContent pageContent;
 
-        public Glucose()
+        public Insulin()
         {
             InitializeComponent();
 
             ICommand buttonCommandOk = new DelegateCommand(ButtonClickOk);
-            ICommand buttonCommandCancel = new DelegateCommand(ButtonClickCancel);
-
+            ICommand buttonCommandCancel = new DelegateCommand(ButtonClickCancel);  
+         
             pageContent = new PageContent
             {
                 DateValue = DateTime.Now,
                 DataInputText = "",
-                DataTypeText = "Glucose",
-                DataUnitText = "mmol/l",
+                DataTypeText = "Insulin",
+                DataUnitText = "U",
                 OkButtonEnabled = "False",
                 ButtonCallbackOk = buttonCommandOk,
                 ButtonCallbackCancel = buttonCommandCancel
             };
 
-            pageContent.PropertyChanged += new PropertyChangedEventHandler(pageContent_PropertyChanged);
-
+            pageContent.PropertyChanged += new PropertyChangedEventHandler (pageContent_PropertyChanged);
+          
             DataContext = pageContent;
+            
         }
 
-       void pageContent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void pageContent_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -52,10 +53,10 @@ namespace Sensotrend
 
         public void ButtonClickOk(object parameter)
         {
-            double glucoseValue = 0;
+            double insulinValue = 0;
             try
             {
-                glucoseValue = Double.Parse(pageContent.DataInputText);
+                insulinValue = Double.Parse(pageContent.DataInputText);
             }
             catch (System.ArgumentNullException ex)
             {
@@ -90,6 +91,7 @@ namespace Sensotrend
             {
                 pageContent.OkButtonEnabled = "True";
             }
-        }    
+        }                  
+
     }
 }

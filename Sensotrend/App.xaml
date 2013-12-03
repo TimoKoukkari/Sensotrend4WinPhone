@@ -2,8 +2,10 @@
     x:Class="Sensotrend.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" x:Name="s">
 
     <!--Application Resources-->
     <Application.Resources>
@@ -18,6 +20,41 @@
             <Setter Property="FontSize" Value="40" />
             <Setter Property="Background" Value="#FF5c89c7" />
         </Style>
+        <ControlTemplate x:Key="DateAndTime" >
+            <Grid>
+              <toolkit:DatePicker HorizontalAlignment="Left" x:Name="datePicker1" VerticalAlignment="Top" 
+                                  IsEnabled="True" Margin="0,42,0,0" ValueStringFormat="{}{0:dd.MM.yyyy}" Width="435"
+                                  Value="{Binding DateValue, Mode=TwoWay}"/>
+              <toolkit:TimePicker HorizontalAlignment="Left" x:Name="timePicker1" VerticalAlignment="Top"
+                                  IsEnabled="True" Margin="0,146,0,0" Width="436" ValueStringFormat="{}{0:HH:mm:ss}" />
+              <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Päivämäärä" VerticalAlignment="Top"/>
+              <TextBlock HorizontalAlignment="Left" Margin="10,119,0,0" TextWrapping="Wrap" Text="Kellonaika" VerticalAlignment="Top"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="DataInput">
+            <Grid  x:Name="dataInputGrid">
+               <TextBlock x:Name="dataTypeField" HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" 
+                         Text="{Binding DataTypeText}" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox x:Name="dataInputField" HorizontalAlignment="Left" Margin="0,276,0,0" TextWrapping="Wrap" Text="{Binding DataInputText, Mode=TwoWay}" 
+                       VerticalAlignment="Top" Width="309" Style="{StaticResource TextBoxStyle}" 
+                       InputScope="Number" />
+                <TextBlock x:Name="dataUnitField" HorizontalAlignment="Left" Margin="314,315,0,0" TextWrapping="Wrap" Text="{Binding DataUnitText}" 
+                         VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="Buttons">
+            <Grid>
+                <Button x:Name="okButton" Content="OK" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" 
+                        Style="{StaticResource ButtonStyle}" IsEnabled="{Binding OkButtonEnabled}" 
+                        Command="{Binding ButtonCallbackOk}"/>
+                <Button Content="Peru" HorizontalAlignment="Left" Margin="285,515,0,0" VerticalAlignment="Top" 
+                        Style="{StaticResource ButtonStyle}"
+                        Command="{Binding ButtonCallbackCancel}"/>
+            </Grid>
+        </ControlTemplate>
+        
+        <sys:String x:Key="appName">sensotrend</sys:String>
+        
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

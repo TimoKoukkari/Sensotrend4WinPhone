@@ -30,6 +30,15 @@ namespace Sensotrend
             NavigationService.Navigate(new Uri("/Glucose.xaml", UriKind.Relative));
         }
 
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Insulin.xaml", UriKind.Relative));
+        }
+
+        private void Button_Click3(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Meal.xaml", UriKind.Relative));
+        }
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);

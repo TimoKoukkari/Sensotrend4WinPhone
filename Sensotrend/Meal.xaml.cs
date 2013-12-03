@@ -12,12 +12,13 @@ using System.ComponentModel;
 
 namespace Sensotrend
 {
-    public partial class Glucose : PhoneApplicationPage
+    public partial class Meal : PhoneApplicationPage
     {
         private PageContent pageContent;
 
-        public Glucose()
+        public Meal()
         {
+            InitializeComponent();
             InitializeComponent();
 
             ICommand buttonCommandOk = new DelegateCommand(ButtonClickOk);
@@ -27,8 +28,8 @@ namespace Sensotrend
             {
                 DateValue = DateTime.Now,
                 DataInputText = "",
-                DataTypeText = "Glucose",
-                DataUnitText = "mmol/l",
+                DataTypeText = "Carbonhydrates",
+                DataUnitText = "g",
                 OkButtonEnabled = "False",
                 ButtonCallbackOk = buttonCommandOk,
                 ButtonCallbackCancel = buttonCommandCancel
@@ -37,9 +38,9 @@ namespace Sensotrend
             pageContent.PropertyChanged += new PropertyChangedEventHandler(pageContent_PropertyChanged);
 
             DataContext = pageContent;
+            
         }
-
-       void pageContent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void pageContent_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -52,10 +53,10 @@ namespace Sensotrend
 
         public void ButtonClickOk(object parameter)
         {
-            double glucoseValue = 0;
+            double carbonValue = 0;
             try
             {
-                glucoseValue = Double.Parse(pageContent.DataInputText);
+                carbonValue = Double.Parse(pageContent.DataInputText);
             }
             catch (System.ArgumentNullException ex)
             {
@@ -70,7 +71,7 @@ namespace Sensotrend
             {
                 MessageBox.Show("Cannot parse " + pageContent.DataInputText);
             }
-            DateTime date = (DateTime) pageContent.DateValue;          
+            DateTime date = (DateTime)pageContent.DateValue;
             MessageBox.Show("Sent to Taltioni: " + pageContent.DataInputText + " at " + date.Date);
             pageContent.DataInputText = "";
         }
@@ -90,6 +91,6 @@ namespace Sensotrend
             {
                 pageContent.OkButtonEnabled = "True";
             }
-        }    
+        }       
     }
 }

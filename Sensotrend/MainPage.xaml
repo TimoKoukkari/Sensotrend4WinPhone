@@ -37,8 +37,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Content="Veren-&#13;sokeri" Click="Button_Click" Style="{StaticResource ButtonStyle}" />
-            <Button Content="Insuliini" Grid.Column="1" Style="{StaticResource ButtonStyle}" />
-            <Button Content="Ateria" Grid.Row="1" Style="{StaticResource ButtonStyle}" />
+            <Button Content="Insuliini" Grid.Column="1" Click="Button_Click2" Style="{StaticResource ButtonStyle}" />
+            <Button Content="Ateria" Grid.Row="1" Click="Button_Click3" Style="{StaticResource ButtonStyle}" />
             <Button Content="Liikunta" Grid.Column="1" Grid.Row="1" Style="{StaticResource ButtonStyle}" />
             <Button Content="Asetukset" Grid.Row="2" Style="{StaticResource ButtonStyle}" />
             <Button Content="Muistiin-&#13;pano" Grid.Column="1" Grid.Row="2" Style="{StaticResource ButtonStyle}" />
