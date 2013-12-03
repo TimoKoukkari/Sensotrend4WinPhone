@@ -20,7 +20,6 @@ namespace Sensotrend
         private const string Hmacsha1SignatureType = "HMAC-SHA1";
 
         private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
-        private const string AuthorizeUrl = "http://api.twitter.com/oauth/authorize";
         private const string AUTHORIZATION_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/Index";
         private const string TOKEN_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
 
@@ -66,7 +65,7 @@ namespace Sensotrend
                     ExtractTokenInfo(responseText);
 
                     // Create authorization url plus query using request token
-                    Uri loginUrl = new Uri(AuthorizeUrl + "?" + OAuthTokenKey + "=" + token);
+                    Uri loginUrl = new Uri(AuthorizeUrl + "?" + OAuthTokenKey + "=" + token);  // miten tämä menee taltionissa? ks. Moves2Taltioni...
                     // Browser navigates to the authorization url
                     Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
 
