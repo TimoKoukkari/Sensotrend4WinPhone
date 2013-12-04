@@ -28,9 +28,11 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
+            <phone:WebBrowser x:Name="AuthenticationBrowser" Visibility="Collapsed" 
+                              LoadCompleted="BrowserLoadCompleted" 
+                              Navigating="BrowserNavigating" IsScriptEnabled="True" />
         </Grid>
-        <phone:WebBrowser x:Name="AuthenticationBrowser" HorizontalAlignment="Left" Margin="239,201,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+
     </Grid>
 
 </phone:PhoneApplicationPage>

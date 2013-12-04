@@ -31,9 +31,7 @@ namespace Sensotrend
         private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
         private const string REDIRECT_URI = "http://localhost:8080/Moves2Taltioni/Authentication";
         private const string CLIENT_ID =  "testipalvelu1_OAuth";
-        //private const string CLIENT_ID = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
-
-           
+         
         private const string GRANT_TYPE_KEY = "grant_type";
         private const string AUTH_CODE_KEY = "code";
         private const string CLIENT_ID_KEY =  "client_id";
@@ -76,7 +74,7 @@ namespace Sensotrend
                 
             // Browser navigates to the authorization url
            // Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
-            AuthenticationBrowser.Visibility = Visibility.Visible;
+            //AuthenticationBrowser.Visibility = Visibility.Visible;
             AuthenticationBrowser.Navigate(loginUrl);
 
             /* Twitter specific stuff, commented out:
@@ -113,6 +111,13 @@ namespace Sensotrend
             */
         }
 
+        private void BrowserNavigating(object sender, NavigatingEventArgs e)
+        {
+            if (AuthenticationBrowser.Visibility == Visibility.Visible)
+            {
+                AuthenticationBrowser.Visibility = Visibility.Collapsed;
+            }
+        }
 
         private void BrowserLoadCompleted(object sender, NavigationEventArgs e)
         {
