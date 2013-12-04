@@ -218,12 +218,14 @@ namespace Sensotrend
                         {
                             var responseText = reader.ReadToEnd();
 
-                            var userInfo = ExtractTokenInfo(responseText);
+                            accessToken = ExtractTokenInfo(responseText);
+
+                            App.accessToken = accessToken;
 
                             Dispatcher.BeginInvoke(() =>
                             {
                                 MessageBox.Show("Access granted");
-
+                                NavigationService.GoBack();
 
                             });
                         }
@@ -231,24 +233,24 @@ namespace Sensotrend
                     catch
                     {
                         Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve Access Token"));
+                        NavigationService.GoBack();
                     }
                 }, req);
             }, request);
+            
         }
 
         // Extracts access/request token and its secret from key/value pairs in input string
         // read from response.
-        private IEnumerable<KeyValuePair<string, string>> ExtractTokenInfo(string responseText)
+        private string ExtractTokenInfo(string responseText)
         {
             /* The response from Taltioni is in JSON and the format is:
              {
                "access_token":"33369431943e4fadb2629bb66a8dafa4",
                "token_type":"taltioni_token"
              }
-             
-  
              */
-             
+
             if (string.IsNullOrEmpty(responseText))
                 return null;
 
@@ -258,15 +260,15 @@ namespace Sensotrend
                                  let bits = pair.Split(':')
                                  where bits.Length == 2
                                  select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
-            accessToken = responsePairs
-                          .Where(kvp => kvp.Key == ACCESS_TOKEN_KEY)
-                          .Select(kvp => kvp.Value).FirstOrDefault();
 
-/*            tokenSecret = responsePairs
-                                      .Where(kvp => kvp.Key == OAuthTokenSecretKey)
-                                      .Select(kvp => kvp.Value).FirstOrDefault();*/
+            string token = responsePairs.ElementAt(0).Value;
+            
+            /*
+            token = responsePairs
+                          .Where(kvp => kvp.Key == ACCESS_TOKEN_KEY).Select(kvp => kvp.Value).FirstOrDefault();
+           */
 
-            return responsePairs;
+            return token;
         }
 
         // Creates a HTTP request complete with signed authorization header.
@@ -274,50 +276,8 @@ namespace Sensotrend
         // the token (request or access) and its secret, the consumer key and consumer
         // secret for the application etc.
         private WebRequest CreateTokenRequest()
-        {
-            
-            /*
-            if (requestParameters == null)
-            {
-                requestParameters = new Dictionary<string, string>();
-            }
-
-            //var secret = "";
-
-            
-            if (!string.IsNullOrEmpty(token))
-            {
-                requestParameters[OAuthTokenKey] = token;
-                secret = tokenSecret;
-            }
-             */
-
-            /*
-            if (!string.IsNullOrEmpty(authCode))
-            {
-                requestParameters[AUTH_CODE_KEY] = authCode;
-                requestParameters[GRANT_TYPE_KEY] = "authorization_code";
-                requestParameters[CLIENT_ID_KEY] = CLIENT_ID;
-            }
-            */
-            // Format of the request for Taltioni:
-            //https://asiakastesti.taltioni.fi/RequestToken?grant_type=authorization_code&code=<code>&client_id=CLIENT_ID
+        {           
             Uri requestUrl = new Uri(REQUEST_TOKEN_URI);
-            /*+
-                "?" + GRANT_TYPE_KEY + "=" + GRANT_TYPE_AUTH_CODE +
-                "&" + AUTH_CODE_KEY + "=" + authCode +
-                "&" + REDIRECT_URI_KEY + "=" + REDIRECT_URI +
-                "&" + CLIENT_ID_KEY + "=" + CLIENT_ID); 
-             */
-
-            /*
-            string normalizedUrl = requestUrl;
-
-            if (!string.IsNullOrEmpty(url.Query))
-            {
-                normalizedUrl = requestUrl.Replace(url.Query, "");
-            }
-            */
 
             WebRequest request = WebRequest.CreateHttp(requestUrl);
             request.Method = "POST";
@@ -378,22 +338,6 @@ namespace Sensotrend
             
             return "Basic " + Convert.ToBase64String(utf8);
         }
-
-        /*
-        private static readonly Random Random = new Random();
-        
-        public static string GenerateNonce()
-        {
-            // Random number between 123456 and 9999999
-            return Random.Next(123456, 9999999).ToString();
-        }
-
-        public static string GenerateTimeStamp()
-        {
-            var now = DateTime.UtcNow;
-            TimeSpan ts = now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }*/
 
     }
 }

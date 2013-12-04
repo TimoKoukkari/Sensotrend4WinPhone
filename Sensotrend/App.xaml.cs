@@ -15,8 +15,11 @@ using Microsoft.Phone.Shell;
 
 namespace Sensotrend
 {
+
     public partial class App : Application
     {
+        public static string accessToken;
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
