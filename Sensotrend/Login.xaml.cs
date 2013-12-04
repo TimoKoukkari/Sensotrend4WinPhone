@@ -40,7 +40,10 @@ namespace Sensotrend
         private const string RESPONSE_TYPE_KEY = "response_type";
         private const string ACCESS_TOKEN_KEY = "access_token";
         private const string REDIRECT_URI_KEY = "redirect_uri";
-        
+
+        private const string APPLICATION_ID = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
+        private const string GRANT_TYPE_AUTH_CODE = "authorization_code";
+
         private string authCode;
         private string accessToken;
 
@@ -185,36 +188,51 @@ namespace Sensotrend
         public void RetrieveAccessToken()
         {
             var request = CreateTokenRequest();
+           
+            var body = GRANT_TYPE_KEY + "=" + GRANT_TYPE_AUTH_CODE +
+            "&" + AUTH_CODE_KEY + "=" + authCode +
+            "&" + REDIRECT_URI_KEY + "=" + REDIRECT_URI +
+            "&" + CLIENT_ID_KEY + "=" + CLIENT_ID;
 
-            request.BeginGetResponse(result =>
+            request.BeginGetRequestStream(reqresult =>
             {
-                try
+                var req = reqresult.AsyncState as HttpWebRequest;
+                using (var strm = req.EndGetRequestStream(reqresult))
+                using (var writer = new StreamWriter(strm))
                 {
-                    var req = result.AsyncState as HttpWebRequest;
+                    writer.Write(body);
+                }
 
-                    if (req == null)
-                        throw new ArgumentNullException("result", "Request is null");
-
-                    using (var resp = req.EndGetResponse(result))
-                    using (var strm = resp.GetResponseStream())
-                    using (var reader = new StreamReader(strm))
+                req.BeginGetResponse(result =>
+                {
+                    try
                     {
-                        var responseText = reader.ReadToEnd();
+                        var req2 = result.AsyncState as HttpWebRequest;
 
-                        var userInfo = ExtractTokenInfo(responseText);
+                        if (req2 == null)
+                            throw new ArgumentNullException("result", "Request is null");
 
-                        Dispatcher.BeginInvoke(() =>
+                        using (var resp = req2.EndGetResponse(result))
+                        using (var strm = resp.GetResponseStream())
+                        using (var reader = new StreamReader(strm))
                         {
-                            MessageBox.Show("Access granted");
+                            var responseText = reader.ReadToEnd();
+
+                            var userInfo = ExtractTokenInfo(responseText);
+
+                            Dispatcher.BeginInvoke(() =>
+                            {
+                                MessageBox.Show("Access granted");
 
 
-                        });
+                            });
+                        }
                     }
-                }
-                catch
-                {
-                    Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve Access Token"));
-                }
+                    catch
+                    {
+                        Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve Access Token"));
+                    }
+                }, req);
             }, request);
         }
 
@@ -234,7 +252,9 @@ namespace Sensotrend
             if (string.IsNullOrEmpty(responseText))
                 return null;
 
-            var responsePairs = (from pair in responseText.Split(',')
+            string cleanedResponse = responseText.Replace("\"", "");
+
+            var responsePairs = (from pair in cleanedResponse.Split(',')
                                  let bits = pair.Split(':')
                                  where bits.Length == 2
                                  select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
@@ -282,10 +302,13 @@ namespace Sensotrend
             */
             // Format of the request for Taltioni:
             //https://asiakastesti.taltioni.fi/RequestToken?grant_type=authorization_code&code=<code>&client_id=CLIENT_ID
-            Uri requestUrl = new Uri(REQUEST_TOKEN_URI + "?" + AUTH_CODE_KEY + "=" + authCode +
-            "&" + GRANT_TYPE_KEY + "=" + "authorization_code" +
-            "&" + CLIENT_ID_KEY + "=" + CLIENT_ID +
-            "&" + REDIRECT_URI_KEY + "=" + REDIRECT_URI);
+            Uri requestUrl = new Uri(REQUEST_TOKEN_URI);
+            /*+
+                "?" + GRANT_TYPE_KEY + "=" + GRANT_TYPE_AUTH_CODE +
+                "&" + AUTH_CODE_KEY + "=" + authCode +
+                "&" + REDIRECT_URI_KEY + "=" + REDIRECT_URI +
+                "&" + CLIENT_ID_KEY + "=" + CLIENT_ID); 
+             */
 
             /*
             string normalizedUrl = requestUrl;
@@ -298,10 +321,10 @@ namespace Sensotrend
 
             WebRequest request = WebRequest.CreateHttp(requestUrl);
             request.Method = "POST";
-
+           
             IDictionary<string, string> requestParameters = new Dictionary<string, string>();
-            requestParameters["USER_NAME"] = "dummy";
-            requestParameters["PASSWORD"] = "pass";
+            requestParameters["USER_NAME"] = CLIENT_ID;
+            requestParameters["PASSWORD"] = APPLICATION_ID;
             // Create the authorization header. Does Taltioni require some sort of user name & password here?
             request.Headers[HttpRequestHeader.Authorization] = GenerateAuthorizationHeader(requestParameters);
 
