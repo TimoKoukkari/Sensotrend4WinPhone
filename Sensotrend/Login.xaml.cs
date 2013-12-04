@@ -29,7 +29,9 @@ namespace Sensotrend
 
         private const string AUTHORIZATION_URI = "https://asiakastesti.taltioni.fi/OAuth/Index";
         private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
-        private const string REDIRECT_URI = "http://localhost:8080/Moves2Taltioni/Authentication";
+        //private const string REDIRECT_URI = "http://localhost:8080/Moves2Taltioni/Authentication";
+        private const string REDIRECT_URI = "http://www.ideallearning.fi";
+
         private const string CLIENT_ID =  "testipalvelu1_OAuth";
          
         private const string GRANT_TYPE_KEY = "grant_type";
@@ -124,11 +126,13 @@ namespace Sensotrend
             // If we have come back from the twitter authorize page
             //if (e.Uri.AbsoluteUri.ToLower().Replace("https://", "http://") == AUTHORIZATION_URI)
             //Taltioni:
-            string uriStr = e.Uri.AbsoluteUri.ToLower().ToString();
-            if (uriStr.Contains("authcallback"))
+            string uriStr = e.Uri.AbsoluteUri;
+            if (uriStr.Contains("?code="))
             {
                 AuthenticationBrowser.Visibility = Visibility.Collapsed;
 
+                int authCodeStart = uriStr.IndexOf("=") + 1;
+                authCode = uriStr.Substring(authCodeStart);
 
                 // TO-DO: find the code parameter from uriStr and save it to authCode
 
@@ -218,11 +222,20 @@ namespace Sensotrend
         // read from response.
         private IEnumerable<KeyValuePair<string, string>> ExtractTokenInfo(string responseText)
         {
+            /* The response from Taltioni is in JSON and the format is:
+             {
+               "access_token":"33369431943e4fadb2629bb66a8dafa4",
+               "token_type":"taltioni_token"
+             }
+             
+  
+             */
+             
             if (string.IsNullOrEmpty(responseText))
                 return null;
 
-            var responsePairs = (from pair in responseText.Split('&')
-                                 let bits = pair.Split('=')
+            var responsePairs = (from pair in responseText.Split(',')
+                                 let bits = pair.Split(':')
                                  where bits.Length == 2
                                  select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
             accessToken = responsePairs
@@ -271,7 +284,8 @@ namespace Sensotrend
             //https://asiakastesti.taltioni.fi/RequestToken?grant_type=authorization_code&code=<code>&client_id=CLIENT_ID
             Uri requestUrl = new Uri(REQUEST_TOKEN_URI + "?" + AUTH_CODE_KEY + "=" + authCode +
             "&" + GRANT_TYPE_KEY + "=" + "authorization_code" +
-            "&" + CLIENT_ID_KEY + "=" + CLIENT_ID);
+            "&" + CLIENT_ID_KEY + "=" + CLIENT_ID +
+            "&" + REDIRECT_URI_KEY + "=" + REDIRECT_URI);
 
             /*
             string normalizedUrl = requestUrl;
@@ -286,6 +300,8 @@ namespace Sensotrend
             request.Method = "POST";
 
             IDictionary<string, string> requestParameters = new Dictionary<string, string>();
+            requestParameters["USER_NAME"] = "dummy";
+            requestParameters["PASSWORD"] = "pass";
             // Create the authorization header. Does Taltioni require some sort of user name & password here?
             request.Headers[HttpRequestHeader.Authorization] = GenerateAuthorizationHeader(requestParameters);
 
@@ -331,17 +347,13 @@ namespace Sensotrend
         {
             var paras = new StringBuilder();
 
-            foreach (var param in requestParameters)
-            {
-                if (!param.Key.StartsWith("oauth_"))
-                    continue;
+            paras.Append(requestParameters["USER_NAME"]);
+            paras.Append(":");
+            paras.Append(requestParameters["PASSWORD"]);
 
-                if (paras.Length > 0)
-                    paras.Append(",");
-
-                paras.Append(param.Key + "=\"" + param.Value + "\"");
-            }
-            return "OAuth " + paras;
+            byte[] utf8 = System.Text.Encoding.UTF8.GetBytes (paras.ToString());
+            
+            return "Basic " + Convert.ToBase64String(utf8);
         }
 
         /*
