@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="httpbinding.taltioni.fi" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://taltioniapi.1.0.taltioni.fi" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="httpbinding.taltioni.fi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_TaltioniAPI_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:import namespace="http://taltioniapi.1.0.taltioni.fi" location="https://asiakastestipalvelut.taltioni.fi/Taltioni?wsdl" />
+  <wsdl:types />
+  <wsdl:binding name="BasicHttpBinding_TaltioniAPI" type="i0:TaltioniAPI">
+    <wsp:PolicyReference URI="#BasicHttpBinding_TaltioniAPI_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="About">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/About" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCodes">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetCodes" style="document" />
+      <wsdl:input name="GetCodesRequest">
+        <soap:header message="i0:GetCodesRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetCodesRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetCodesRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetCodesRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCodesResponse">
+        <soap:header message="i0:GetCodesResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItemTypes">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemTypes" style="document" />
+      <wsdl:input name="GetHealthRecordItemTypesRequest">
+        <soap:header message="i0:GetHealthRecordItemTypesRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemTypesRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemTypesRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemTypesRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordItemTypesResponse">
+        <soap:header message="i0:GetHealthRecordItemTypesResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordProfile">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordProfile" style="document" />
+      <wsdl:input name="GetHealthRecordProfileRequest">
+        <soap:header message="i0:GetHealthRecordProfileRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetHealthRecordProfileRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetHealthRecordProfileRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetHealthRecordProfileRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetHealthRecordProfileRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordProfileResponse">
+        <soap:header message="i0:GetHealthRecordProfileResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserProfile">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetUserProfile" style="document" />
+      <wsdl:input name="GetUserProfileRequest">
+        <soap:header message="i0:GetUserProfileRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetUserProfileRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetUserProfileRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetUserProfileRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetUserProfileRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetUserProfileResponse">
+        <soap:header message="i0:GetUserProfileResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItems">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItems" style="document" />
+      <wsdl:input name="GetHealthRecordItemsRequest">
+        <soap:header message="i0:GetHealthRecordItemsRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordItemsResponse">
+        <soap:header message="i0:GetHealthRecordItemsResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItemsPaged">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemsPaged" style="document" />
+      <wsdl:input name="GetHealthRecordItemsPagedRequest">
+        <soap:header message="i0:GetHealthRecordItemsPagedRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsPagedRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsPagedRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsPagedRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemsPagedRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordItemsPagedResponse">
+        <soap:header message="i0:GetHealthRecordItemsPagedResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItem">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItem" style="document" />
+      <wsdl:input name="GetHealthRecordItemRequest">
+        <soap:header message="i0:GetHealthRecordItemRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetHealthRecordItemRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordItemResponse">
+        <soap:header message="i0:GetHealthRecordItemResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestHealthRecordItem">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetLatestHealthRecordItem" style="document" />
+      <wsdl:input name="GetLatestHealthRecordItemRequest">
+        <soap:header message="i0:GetLatestHealthRecordItemRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetLatestHealthRecordItemRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetLatestHealthRecordItemRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetLatestHealthRecordItemRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetLatestHealthRecordItemRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHealthRecordItemResponse">
+        <soap:header message="i0:GetHealthRecordItemResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateHealthRecordProfile">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/CreateHealthRecordProfile" style="document" />
+      <wsdl:input name="CreateHealthRecordProfileRequest">
+        <soap:header message="i0:CreateHealthRecordProfileRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:CreateHealthRecordProfileRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:CreateHealthRecordProfileRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:CreateHealthRecordProfileRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreateHealthRecordProfileResponse">
+        <soap:header message="i0:CreateHealthRecordProfileResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateHealthRecordProfile">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/UpdateHealthRecordProfile" style="document" />
+      <wsdl:input name="UpdateHealthRecordProfileRequest">
+        <soap:header message="i0:UpdateHealthRecordProfileRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:UpdateHealthRecordProfileRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:UpdateHealthRecordProfileRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:UpdateHealthRecordProfileRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:UpdateHealthRecordProfileRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UpdateHealthRecordProfileResponse">
+        <soap:header message="i0:UpdateHealthRecordProfileResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="StoreHealthRecordItems">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/StoreHealthRecordItems" style="document" />
+      <wsdl:input name="StoreHealthRecordItemsRequest">
+        <soap:header message="i0:StoreHealthRecordItemsRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:StoreHealthRecordItemsRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:StoreHealthRecordItemsRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:StoreHealthRecordItemsRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:StoreHealthRecordItemsRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="StoreHealthRecordItemsResponse">
+        <soap:header message="i0:StoreHealthRecordItemsResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteHealthRecordItems">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/DeleteHealthRecordItems" style="document" />
+      <wsdl:input name="DeleteHealthRecordItemsRequest">
+        <soap:header message="i0:DeleteHealthRecordItemsRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:DeleteHealthRecordItemsRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:DeleteHealthRecordItemsRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:DeleteHealthRecordItemsRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:DeleteHealthRecordItemsRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="DeleteHealthRecordItemsResponse">
+        <soap:header message="i0:DeleteHealthRecordItemsResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationInfo">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetApplicationInfo" style="document" />
+      <wsdl:input name="GetApplicationInfoRequest">
+        <soap:header message="i0:GetApplicationInfoRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetApplicationInfoRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetApplicationInfoRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetApplicationInfoRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetApplicationInfoResponse">
+        <soap:header message="i0:GetApplicationInfoResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPersonalIdentifier">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/CheckPersonalIdentifier" style="document" />
+      <wsdl:input name="CheckPersonalIdentifierRequest">
+        <soap:header message="i0:CheckPersonalIdentifierRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:CheckPersonalIdentifierRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:CheckPersonalIdentifierRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:CheckPersonalIdentifierRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:CheckPersonalIdentifierRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CheckPersonalIdentifierResponse">
+        <soap:header message="i0:CheckPersonalIdentifierResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorizationInfo">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/GetAuthorizationInfo" style="document" />
+      <wsdl:input name="GetAuthorizationInfoRequest">
+        <soap:header message="i0:GetAuthorizationInfoRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:GetAuthorizationInfoRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:GetAuthorizationInfoRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:GetAuthorizationInfoRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:GetAuthorizationInfoRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetAuthorizationInfoResponse">
+        <soap:header message="i0:GetAuthorizationInfoResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveApplicationAuthorization">
+      <soap:operation soapAction="Taltioni.Services/TaltioniAPI/Actions/RemoveUserAuthorization" style="document" />
+      <wsdl:input name="RemoveApplicationAuthorizationRequest">
+        <soap:header message="i0:RemoveApplicationAuthorizationRequest_Headers" part="AccessToken" use="literal" />
+        <soap:header message="i0:RemoveApplicationAuthorizationRequest_Headers" part="ApplicationId" use="literal" />
+        <soap:header message="i0:RemoveApplicationAuthorizationRequest_Headers" part="AuthCode" use="literal" />
+        <soap:header message="i0:RemoveApplicationAuthorizationRequest_Headers" part="RequestId" use="literal" />
+        <soap:header message="i0:RemoveApplicationAuthorizationRequest_Headers" part="Timestamp" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="RemoveApplicationAuthorizationResponse">
+        <soap:header message="i0:RemoveApplicationAuthorizationResponse_Headers" part="RequestId" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ReceiverFault">
+        <soap:fault use="literal" name="ReceiverFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SenderFault">
+        <soap:fault use="literal" name="SenderFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

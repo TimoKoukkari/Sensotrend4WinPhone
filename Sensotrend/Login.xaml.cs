@@ -10,6 +10,9 @@ using Microsoft.Phone.Shell;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Security.Cryptography;
+using Sensotrend.TaltioniService;
 
 namespace Sensotrend
 {
@@ -77,43 +80,8 @@ namespace Sensotrend
                 "&client_id=" + CLIENT_ID +
                 "&redirect_uri=" + REDIRECT_URI);
                 
-            // Browser navigates to the authorization url
-           // Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
-            //AuthenticationBrowser.Visibility = Visibility.Visible;
             AuthenticationBrowser.Navigate(loginUrl);
 
-            /* Twitter specific stuff, commented out:
-            // Create the request to get a request token and its secret
-            WebRequest request = CreateRequest("POST", AUTHORIZATION_LOCATION);
-            request.BeginGetResponse(result =>
-            {
-                try
-                {
-                    HttpWebRequest req = result.AsyncState as HttpWebRequest;
-
-                    if (req == null)
-                        throw new ArgumentNullException("result", "Request parameter is null");
-
-                    WebResponse resp = req.EndGetResponse(result);
-                    Stream strm = resp.GetResponseStream();
-                    StreamReader reader = new StreamReader(strm);
-                    string responseText = reader.ReadToEnd();
-
-                    // Parse out the request token
-                    ExtractTokenInfo(responseText);
-
-                    // Create authorization url plus query using request token
-                    Uri loginUrl = new Uri(AuthorizeUrl + "?" + OAuthTokenKey + "=" + token);  // miten tämä menee taltionissa? ks. Moves2Taltioni...
-                    // Browser navigates to the authorization url
-                    Dispatcher.BeginInvoke(() => AuthenticationBrowser.Navigate(loginUrl));
-
-                }
-                catch
-                {
-                    Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve request token"));
-                }
-            }, request);
-            */
         }
 
         private void BrowserNavigating(object sender, NavigatingEventArgs e)
@@ -126,9 +94,7 @@ namespace Sensotrend
 
         private void BrowserLoadCompleted(object sender, NavigationEventArgs e)
         {
-            // If we have come back from the twitter authorize page
-            //if (e.Uri.AbsoluteUri.ToLower().Replace("https://", "http://") == AUTHORIZATION_URI)
-            //Taltioni:
+
             string uriStr = e.Uri.AbsoluteUri;
             if (uriStr.Contains("?code="))
             {
@@ -137,40 +103,16 @@ namespace Sensotrend
                 int authCodeStart = uriStr.IndexOf("=") + 1;
                 authCode = uriStr.Substring(authCodeStart);
 
-                // TO-DO: find the code parameter from uriStr and save it to authCode
-
                 if (!string.IsNullOrEmpty(authCode))
                 {
                     RetrieveAccessToken();
                 }
-
-                /*
-                // Parse the verifier pin from the authorize page's XML content
-                var htmlString = AuthenticationBrowser.SaveToString();
-
-                // Find the code element and extract the pin from it
-                var pinFinder = new Regex(@"<code>([A-Za-z0-9_]+)</code>", RegexOptions.IgnoreCase);
-
-                var match = pinFinder.Match(htmlString);
-
-                if (match.Success)
-                {
-                    authCode = match.Groups[1].Value;
-
-                    // If we've got the verifier pin then next get the access token
-                    if (!string.IsNullOrEmpty(authCode))
-                    {
-                        RetrieveAccessToken();
-                    }
-                }
-                */
 
                 if (string.IsNullOrEmpty(authCode))
                 {
                     Dispatcher.BeginInvoke(() => MessageBox.Show("Authorization denied by user"));
                 }
 
-                // Make sure pin is reset to null
                 authCode = null;
             }
             else
@@ -224,7 +166,7 @@ namespace Sensotrend
 
                             Dispatcher.BeginInvoke(() =>
                             {
-                                MessageBox.Show("Access granted");
+                                MessageBox.Show("Access granted, token: " + accessToken);
                                 NavigationService.GoBack();
 
                             });
@@ -271,10 +213,6 @@ namespace Sensotrend
             return token;
         }
 
-        // Creates a HTTP request complete with signed authorization header.
-        // The authorization header contains all the OAuth parameters including
-        // the token (request or access) and its secret, the consumer key and consumer
-        // secret for the application etc.
         private WebRequest CreateTokenRequest()
         {           
             Uri requestUrl = new Uri(REQUEST_TOKEN_URI);
@@ -290,42 +228,7 @@ namespace Sensotrend
 
             return request;
         }
-
-        /// <summary>
-        /// The set of characters that are unreserved in RFC 2396 but are NOT unreserved in RFC 3986.
-        /// </summary>
-        private static readonly string[] UriRfc3986CharsToEscape = new[] { "!", "*", "'", "(", ")" };
-        private static readonly char[] HexUpperChars =
-                                 new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-        public static string UrlEncode(string value)
-        {
-            // Start with RFC 2396 escaping by calling the .NET method to do the work.
-            // This MAY sometimes exhibit RFC 3986 behavior (according to the documentation).
-            // If it does, the escaping we do that follows it will be a no-op since the
-            // characters we search for to replace can't possibly exist in the string.
-            var escaped = new StringBuilder(Uri.EscapeDataString(value));
-            foreach (string t in UriRfc3986CharsToEscape)
-            {
-                escaped.Replace(t, HexEscape(t[0]));
-            }
-            return escaped.ToString();
-        }
-
-        public static string HexEscape(char character)
-        {
-            var to = new char[3];
-            int pos = 0;
-            EscapeAsciiChar(character, to, ref pos);
-            return new string(to);
-        }
-
-        private static void EscapeAsciiChar(char ch, char[] to, ref int pos)
-        {
-            to[pos++] = '%';
-            to[pos++] = HexUpperChars[(ch & 240) >> 4];
-            to[pos++] = HexUpperChars[ch & '\x000f'];
-        }
-
+       
         public static string GenerateAuthorizationHeader(IDictionary<string, string> requestParameters)
         {
             var paras = new StringBuilder();
@@ -339,5 +242,33 @@ namespace Sensotrend
             return "Basic " + Convert.ToBase64String(utf8);
         }
 
+ /*       
+        private void testAccessToken()
+        {
+
+            Guid requestId = Guid.NewGuid(); 
+            string timestamp = XmlConvert.ToString(DateTime.UtcNow, XmlDateTimeSerializationMode.Utc); 
+            SHA256Managed hashAlgorithm = new SHA256Managed(); 
+            string toHash = requestId.ToString() + ";" + timestamp + ";" + APPLICATION_ID + ";" + accessToken + ";" + SharedSecret; 
+            byte[] authCode = hashAlgorithm.ComputeHash(System.Text.Encoding.UTF8.GetBytes(toHash));
+
+            bool filterByApplicationId = true;
+            DateTime? startDate = null; 
+            DateTime? endDate = null;
+            using (var client = new TaltioniAPIClient())
+            {
+                client.
+                var data = client.GetHealthRecordItems(accessToken, 
+                    APPLICATION_ID, authCode, ref requestId, 
+                    timestamp, startDate, endDate, 
+                    new string[] { "Weight" }, 
+                    filterByApplicationId);
+                var observations = data.Observations;
+            }
+        }
+     
+  */
+    
     }
+
 }

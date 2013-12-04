@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://taltioniapi.1.0.taltioni.fi" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="httpbinding.taltioni.fi" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TaltioniService" targetNamespace="http://taltioniapi.1.0.taltioni.fi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="httpbinding.taltioni.fi" location="https://asiakastestipalvelut.taltioni.fi/Taltioni?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://taltioniapi.1.0.taltioni.fi/Imports">
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd0" namespace="http://taltioniapi.1.0.taltioni.fi" />
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd2" namespace="http://schemas.medixine.com/2008/12/fault" />
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd3" namespace="HealthRecordClient.Data" />
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd4" namespace="Medixine.Model.Services" />
+      <xsd:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="TaltioniAPI_About_InputMessage">
+    <wsdl:part name="parameters" element="tns:About" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_About_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AboutResponse" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_About_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_About_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="GetCodesRequest">
+    <wsdl:part name="parameters" element="tns:GetCodesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetCodesRequest_Headers">
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetCodesResponse">
+    <wsdl:part name="parameters" element="tns:GetCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCodesResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetCodes_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetCodes_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemTypesRequest">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemTypesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemTypesRequest_Headers">
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemTypesResponse">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemTypesResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItemTypes_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItemTypes_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordProfileRequest">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordProfileRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordProfileRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordProfileResponse">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordProfileResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordProfile_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordProfile_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="GetUserProfileRequest">
+    <wsdl:part name="parameters" element="tns:GetUserProfileRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetUserProfileRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetUserProfileResponse">
+    <wsdl:part name="parameters" element="tns:GetUserProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserProfileResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetUserProfile_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetUserProfile_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsRequest">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemsRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsResponse">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItems_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItems_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsPagedRequest">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemsPagedRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsPagedRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsPagedResponse">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemsPagedResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemsPagedResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItemsPaged_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItemsPaged_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemRequest">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemResponse">
+    <wsdl:part name="parameters" element="tns:GetHealthRecordItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHealthRecordItemResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItem_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetHealthRecordItem_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestHealthRecordItemRequest">
+    <wsdl:part name="parameters" element="tns:GetLatestHealthRecordItemRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetLatestHealthRecordItemRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetLatestHealthRecordItem_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetLatestHealthRecordItem_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="CreateHealthRecordProfileRequest">
+    <wsdl:part name="parameters" element="tns:CreateHealthRecordProfileRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateHealthRecordProfileRequest_Headers">
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="CreateHealthRecordProfileResponse">
+    <wsdl:part name="parameters" element="tns:CreateHealthRecordProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateHealthRecordProfileResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_CreateHealthRecordProfile_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_CreateHealthRecordProfile_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="UpdateHealthRecordProfileRequest">
+    <wsdl:part name="parameters" element="tns:UpdateHealthRecordProfileRequest" />
+  </wsdl:message>
+  <wsdl:message name="UpdateHealthRecordProfileRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="UpdateHealthRecordProfileResponse">
+    <wsdl:part name="parameters" element="tns:UpdateHealthRecordProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateHealthRecordProfileResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_UpdateHealthRecordProfile_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_UpdateHealthRecordProfile_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="StoreHealthRecordItemsRequest">
+    <wsdl:part name="parameters" element="tns:StoreHealthRecordItemsRequest" />
+  </wsdl:message>
+  <wsdl:message name="StoreHealthRecordItemsRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="StoreHealthRecordItemsResponse">
+    <wsdl:part name="parameters" element="tns:StoreHealthRecordItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="StoreHealthRecordItemsResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_StoreHealthRecordItems_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_StoreHealthRecordItems_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHealthRecordItemsRequest">
+    <wsdl:part name="parameters" element="tns:DeleteHealthRecordItemsRequest" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHealthRecordItemsRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHealthRecordItemsResponse">
+    <wsdl:part name="parameters" element="tns:DeleteHealthRecordItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHealthRecordItemsResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_DeleteHealthRecordItems_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_DeleteHealthRecordItems_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationInfoRequest">
+    <wsdl:part name="parameters" element="tns:GetApplicationInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationInfoRequest_Headers">
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetApplicationInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetApplicationInfoResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetApplicationInfo_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetApplicationInfo_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="CheckPersonalIdentifierRequest">
+    <wsdl:part name="parameters" element="tns:CheckPersonalIdentifierRequest" />
+  </wsdl:message>
+  <wsdl:message name="CheckPersonalIdentifierRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="CheckPersonalIdentifierResponse">
+    <wsdl:part name="parameters" element="tns:CheckPersonalIdentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckPersonalIdentifierResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_CheckPersonalIdentifier_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_CheckPersonalIdentifier_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorizationInfoRequest">
+    <wsdl:part name="parameters" element="tns:GetAuthorizationInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorizationInfoRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorizationInfoResponse">
+    <wsdl:part name="parameters" element="tns:GetAuthorizationInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorizationInfoResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetAuthorizationInfo_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_GetAuthorizationInfo_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:message name="RemoveApplicationAuthorizationRequest">
+    <wsdl:part name="parameters" element="tns:RemoveApplicationAuthorizationRequest" />
+  </wsdl:message>
+  <wsdl:message name="RemoveApplicationAuthorizationRequest_Headers">
+    <wsdl:part name="AccessToken" element="tns:AccessToken" />
+    <wsdl:part name="ApplicationId" element="tns:ApplicationId" />
+    <wsdl:part name="AuthCode" element="tns:AuthCode" />
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+    <wsdl:part name="Timestamp" element="tns:Timestamp" />
+  </wsdl:message>
+  <wsdl:message name="RemoveApplicationAuthorizationResponse">
+    <wsdl:part name="parameters" element="tns:RemoveApplicationAuthorizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveApplicationAuthorizationResponse_Headers">
+    <wsdl:part name="RequestId" element="tns:RequestId" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_RemoveApplicationAuthorization_ReceiverFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:ReceiverFault" />
+  </wsdl:message>
+  <wsdl:message name="TaltioniAPI_RemoveApplicationAuthorization_SenderFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SenderFault" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="false" name="TaltioniAPI">
+    <wsdl:documentation>
+      <summary>Taltioni Web Services API 1.0</summary>
+    </wsdl:documentation>
+    <wsdl:operation name="About">
+      <wsdl:documentation>
+        <summary>Returns information about the service</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/About" message="tns:TaltioniAPI_About_InputMessage" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/AboutResponse" message="tns:TaltioniAPI_About_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/AboutReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_About_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/AboutSenderFault" name="SenderFault" message="tns:TaltioniAPI_About_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCodes">
+      <wsdl:documentation>
+        <summary>Get codes used to specify data types and values</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetCodes" name="GetCodesRequest" message="tns:GetCodesRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetCodesResponse" name="GetCodesResponse" message="tns:GetCodesResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetCodesReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetCodes_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetCodesSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetCodes_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItemTypes">
+      <wsdl:documentation>
+        <summary>Get health record item types</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemTypes" name="GetHealthRecordItemTypesRequest" message="tns:GetHealthRecordItemTypesRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemTypesResponse" name="GetHealthRecordItemTypesResponse" message="tns:GetHealthRecordItemTypesResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemTypesSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetHealthRecordItemTypes_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemTypesReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetHealthRecordItemTypes_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordProfile">
+      <wsdl:documentation>
+        <summary>Get health record profile with basic administrative information</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordProfile" name="GetHealthRecordProfileRequest" message="tns:GetHealthRecordProfileRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordProfileResponse" name="GetHealthRecordProfileResponse" message="tns:GetHealthRecordProfileResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordProfileSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetHealthRecordProfile_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordProfileReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetHealthRecordProfile_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserProfile">
+      <wsdl:documentation>
+        <summary>Get user profile with basic administrative information</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetUserProfile" name="GetUserProfileRequest" message="tns:GetUserProfileRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetUserProfileResponse" name="GetUserProfileResponse" message="tns:GetUserProfileResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetUserProfileSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetUserProfile_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetUserProfileReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetUserProfile_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItems">
+      <wsdl:documentation>
+        <summary>Get health record items</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItems" name="GetHealthRecordItemsRequest" message="tns:GetHealthRecordItemsRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemsResponse" name="GetHealthRecordItemsResponse" message="tns:GetHealthRecordItemsResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemsReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetHealthRecordItems_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemsSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetHealthRecordItems_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItemsPaged">
+      <wsdl:documentation>
+        <summary>Get a single page of health record items</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemsPaged" name="GetHealthRecordItemsPagedRequest" message="tns:GetHealthRecordItemsPagedRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemsPagedResponse" name="GetHealthRecordItemsPagedResponse" message="tns:GetHealthRecordItemsPagedResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemsPagedReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetHealthRecordItemsPaged_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemsPagedSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetHealthRecordItemsPaged_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHealthRecordItem">
+      <wsdl:documentation>
+        <summary>Get health record item with the given type and id</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItem" name="GetHealthRecordItemRequest" message="tns:GetHealthRecordItemRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetHealthRecordItemResponse" name="GetHealthRecordItemResponse" message="tns:GetHealthRecordItemResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetHealthRecordItem_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetHealthRecordItemReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetHealthRecordItem_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLatestHealthRecordItem">
+      <wsdl:documentation>
+        <summary>Get latest health record item of the given type</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetLatestHealthRecordItem" name="GetLatestHealthRecordItemRequest" message="tns:GetLatestHealthRecordItemRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetLatestHealthRecordItemResponse" name="GetHealthRecordItemResponse" message="tns:GetHealthRecordItemResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetLatestHealthRecordItemSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetLatestHealthRecordItem_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetLatestHealthRecordItemReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetLatestHealthRecordItem_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateHealthRecordProfile">
+      <wsdl:documentation>
+        <summary>Create health record profile</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/CreateHealthRecordProfile" name="CreateHealthRecordProfileRequest" message="tns:CreateHealthRecordProfileRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/CreateHealthRecordProfileResponse" name="CreateHealthRecordProfileResponse" message="tns:CreateHealthRecordProfileResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/CreateHealthRecordProfileReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_CreateHealthRecordProfile_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/CreateHealthRecordProfileSenderFault" name="SenderFault" message="tns:TaltioniAPI_CreateHealthRecordProfile_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateHealthRecordProfile">
+      <wsdl:documentation>
+        <summary>Store health record profile</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/UpdateHealthRecordProfile" name="UpdateHealthRecordProfileRequest" message="tns:UpdateHealthRecordProfileRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/UpdateHealthRecordProfileResponse" name="UpdateHealthRecordProfileResponse" message="tns:UpdateHealthRecordProfileResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/UpdateHealthRecordProfileReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_UpdateHealthRecordProfile_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/UpdateHealthRecordProfileSenderFault" name="SenderFault" message="tns:TaltioniAPI_UpdateHealthRecordProfile_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StoreHealthRecordItems">
+      <wsdl:documentation>
+        <summary>Store health record items. Indicate access token and items to create or update.
+						   Update will be performed if an item with the given Id is found.
+						   Leave Id empty for new items.
+						   All times must be given as UTC.\n\n
+						   The response contains a status for each item included in the request. The response items are in the same order as the request items so the caller will be able to get the correct Ids of all new items.
+		</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/StoreHealthRecordItems" name="StoreHealthRecordItemsRequest" message="tns:StoreHealthRecordItemsRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/StoreHealthRecordItemsResponse" name="StoreHealthRecordItemsResponse" message="tns:StoreHealthRecordItemsResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/StoreHealthRecordItemsSenderFault" name="SenderFault" message="tns:TaltioniAPI_StoreHealthRecordItems_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/StoreHealthRecordItemsReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_StoreHealthRecordItems_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteHealthRecordItems">
+      <wsdl:documentation>
+        <summary>Delete health record items. Indicate access token and items to delete.
+		</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/DeleteHealthRecordItems" name="DeleteHealthRecordItemsRequest" message="tns:DeleteHealthRecordItemsRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/DeleteHealthRecordItemsResponse" name="DeleteHealthRecordItemsResponse" message="tns:DeleteHealthRecordItemsResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/DeleteHealthRecordItemsSenderFault" name="SenderFault" message="tns:TaltioniAPI_DeleteHealthRecordItems_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/DeleteHealthRecordItemsReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_DeleteHealthRecordItems_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationInfo">
+      <wsdl:documentation>
+        <summary>Returns information about the application.
+		</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetApplicationInfo" name="GetApplicationInfoRequest" message="tns:GetApplicationInfoRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetApplicationInfoResponse" name="GetApplicationInfoResponse" message="tns:GetApplicationInfoResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetApplicationInfoSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetApplicationInfo_SenderFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetApplicationInfoReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetApplicationInfo_ReceiverFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPersonalIdentifier">
+      <wsdl:documentation>
+        <summary>Checks if the given personal identifier (HETU) is the same as the identifier stored in the profile</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/CheckPersonalIdentifier" name="CheckPersonalIdentifierRequest" message="tns:CheckPersonalIdentifierRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/CheckPersonalIdentifierResponse" name="CheckPersonalIdentifierResponse" message="tns:CheckPersonalIdentifierResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/CheckPersonalIdentifierReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_CheckPersonalIdentifier_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/CheckPersonalIdentifierSenderFault" name="SenderFault" message="tns:TaltioniAPI_CheckPersonalIdentifier_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorizationInfo">
+      <wsdl:documentation>
+        <summary>Returns information about the current link between the user and your application.
+		</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetAuthorizationInfo" name="GetAuthorizationInfoRequest" message="tns:GetAuthorizationInfoRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/GetAuthorizationInfoResponse" name="GetAuthorizationInfoResponse" message="tns:GetAuthorizationInfoResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetAuthorizationInfoReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_GetAuthorizationInfo_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/GetAuthorizationInfoSenderFault" name="SenderFault" message="tns:TaltioniAPI_GetAuthorizationInfo_SenderFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveApplicationAuthorization">
+      <wsdl:documentation>
+        <summary>Inactivates the link between the application and the user</summary>
+      </wsdl:documentation>
+      <wsdl:input wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/RemoveUserAuthorization" name="RemoveApplicationAuthorizationRequest" message="tns:RemoveApplicationAuthorizationRequest" />
+      <wsdl:output wsaw:Action="Taltioni.Services/TaltioniAPI/Actions/RemoveUserAuthorizationResponse" name="RemoveApplicationAuthorizationResponse" message="tns:RemoveApplicationAuthorizationResponse" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/RemoveApplicationAuthorizationReceiverFault" name="ReceiverFault" message="tns:TaltioniAPI_RemoveApplicationAuthorization_ReceiverFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://taltioniapi.1.0.taltioni.fi/TaltioniAPI/RemoveApplicationAuthorizationSenderFault" name="SenderFault" message="tns:TaltioniAPI_RemoveApplicationAuthorization_SenderFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="TaltioniService">
+    <wsdl:port name="BasicHttpBinding_TaltioniAPI" binding="i0:BasicHttpBinding_TaltioniAPI">
+      <soap:address location="https://asiakastestipalvelut.taltioni.fi/Taltioni" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

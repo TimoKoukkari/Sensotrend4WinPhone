@@ -1,0 +1,20 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_TaltioniAPI" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="Transport" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="https://asiakastestipalvelut.taltioni.fi/Taltioni"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_TaltioniAPI"
+                contract="TaltioniService.TaltioniAPI" name="BasicHttpBinding_TaltioniAPI" />
+            <endpoint address="https://asiakastestipalvelut.taltioni.fi/Taltioni"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_TaltioniAPI"
+                contract="TaltioniService.TaltioniAPI" name="BasicHttpBinding_TaltioniAPI1" />
+        </client>
+    </system.serviceModel>
+</configuration>

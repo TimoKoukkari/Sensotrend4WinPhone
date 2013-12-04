@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="559a85c1-a24c-443d-a312-48f675408d5f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>true</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://asiakastestipalvelut.taltioni.fi/Taltioni" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Taltioni.wsdl" MetadataType="Wsdl" ID="3f20c4fe-1726-446a-9f7e-211239dfee2f" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?wsdl=wsdl0" />
+    <MetadataFile FileName="TaltioniService.wsdl" MetadataType="Wsdl" ID="bcebe154-ffb0-4c31-a4c4-7bef6e542630" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?wsdl" />
+    <MetadataFile FileName="Taltioni.xsd" MetadataType="Schema" ID="2090d199-b5ba-43bd-9e4d-0bcdc8cd4cec" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd0" />
+    <MetadataFile FileName="Taltioni1.xsd" MetadataType="Schema" ID="bffae0a9-222a-4b1f-84c7-80bb2383659c" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd1" />
+    <MetadataFile FileName="Taltioni2.xsd" MetadataType="Schema" ID="672bd86c-5026-4c34-8c1f-555e44821175" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd2" />
+    <MetadataFile FileName="Taltioni3.xsd" MetadataType="Schema" ID="07509ec1-47b2-422b-923c-a95a9d1044e3" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd3" />
+    <MetadataFile FileName="Taltioni4.xsd" MetadataType="Schema" ID="8763f9c9-8640-473d-98b0-cf13dcc5ca79" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd4" />
+    <MetadataFile FileName="Taltioni5.xsd" MetadataType="Schema" ID="9b850b25-a433-4d88-a20c-8984e0013e18" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd5" />
+    <MetadataFile FileName="TaltioniService1.wsdl" MetadataType="Wsdl" ID="9b5152d0-7bc9-45f5-a508-d9bce20f1c37" SourceId="1" SourceUrl="https://asiakastestipalvelut.taltioni.fi/Taltioni" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

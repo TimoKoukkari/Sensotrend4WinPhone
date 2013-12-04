@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://taltioniapi.1.0.taltioni.fi" elementFormDefault="qualified" targetNamespace="http://taltioniapi.1.0.taltioni.fi" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd2" namespace="http://schemas.medixine.com/2008/12/fault" />
+  <xs:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd3" namespace="HealthRecordClient.Data" />
+  <xs:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://asiakastestipalvelut.taltioni.fi/Taltioni?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="About">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AboutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ServiceDescription" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:q1="http://schemas.medixine.com/2008/12/fault" name="ReceiverFault" nillable="true" type="q1:ReceiverFault" />
+  <xs:element xmlns:q2="http://schemas.medixine.com/2008/12/fault" name="SenderFault" nillable="true" type="q2:SenderFault" />
+  <xs:element name="GetCodesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="HealthRecordClient.Data" minOccurs="0" name="CodeFilter" nillable="true" type="q3:CodeFilter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApplicationId" nillable="true" type="xs:string" />
+  <xs:element name="AuthCode" nillable="true" type="xs:base64Binary" />
+  <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" name="RequestId" type="q4:guid" />
+  <xs:element name="Timestamp" nillable="true" type="xs:string" />
+  <xs:element name="GetCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="HealthRecordClient.Data" minOccurs="0" name="Codes" nillable="true" type="q5:ArrayOfCodedValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemTypesRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ExcludeObservationTypes" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ExcludeStaticHealthRecordTypes" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemTypesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="HealthRecordClient.Data" minOccurs="0" name="ItemTypes" nillable="true" type="q6:ArrayOfHealthRecordItemType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordProfileRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccessToken" nillable="true" type="xs:string" />
+  <xs:element name="GetHealthRecordProfileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="HealthRecordClient.Data" minOccurs="0" name="Profile" nillable="true" type="q7:HealthRecordProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserProfileRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserProfileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="HealthRecordClient.Data" minOccurs="0" name="UserProfile" nillable="true" type="q8:Person" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartDateTime" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="EndDateTime" nillable="true" type="xs:dateTime" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ItemTypes" nillable="true" type="q9:ArrayOfstring" />
+        <xs:element minOccurs="0" name="FilterByApplicationId" type="xs:boolean" />
+        <xs:element minOccurs="0" name="FindByLastUpdated" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="HealthRecordClient.Data" minOccurs="0" name="HealthRecordData" nillable="true" type="q10:HealthRecordData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemsPagedRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartDateTime" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="EndDateTime" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="PageSize" type="xs:int" />
+        <xs:element minOccurs="0" name="Page" type="xs:int" />
+        <xs:element minOccurs="0" name="ItemType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FilterByApplicationId" type="xs:boolean" />
+        <xs:element minOccurs="0" name="FindByLastUpdated" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemsPagedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="HealthRecordClient.Data" minOccurs="0" name="HealthRecordData" nillable="true" type="q11:HealthRecordData" />
+        <xs:element minOccurs="0" name="ExpectedCount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ItemType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ItemId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="SourceSystem" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ItemIdInSourceSystem" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FilterByApplicationId" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHealthRecordItemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="HealthRecordClient.Data" minOccurs="0" name="HealthRecordData" nillable="true" type="q12:HealthRecordData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLatestHealthRecordItemRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ItemType" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHealthRecordProfileRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="HealthRecordClient.Data" minOccurs="0" name="Profile" nillable="true" type="q13:HealthRecordProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHealthRecordProfileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PersonId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateHealthRecordProfileRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="HealthRecordClient.Data" minOccurs="0" name="Profile" nillable="true" type="q14:HealthRecordProfile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateHealthRecordProfileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreHealthRecordItemsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="HealthRecordClient.Data" minOccurs="0" name="HealthRecordData" nillable="true" type="q15:HealthRecordData" />
+        <xs:element minOccurs="0" name="AbortOnError" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreHealthRecordItemsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="HealthRecordClient.Data" minOccurs="0" name="StoreItemsResult" nillable="true" type="q16:StoreItemsResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteHealthRecordItemsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="HealthRecordClient.Data" minOccurs="0" name="HealthRecordItems" nillable="true" type="q17:ArrayOfItemInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteHealthRecordItemsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApplicationInfoRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApplicationInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="HealthRecordClient.Data" minOccurs="0" name="ApplicationInfo" nillable="true" type="q18:ApplicationInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPersonalIdentifierRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PersonalIdentifier" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPersonalIdentifierResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsMatch" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAuthorizationInfoRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAuthorizationInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="HealthRecordClient.Data" minOccurs="0" name="AuthorizationInfo" nillable="true" type="q19:AuthorizationInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveApplicationAuthorizationRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveApplicationAuthorizationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
