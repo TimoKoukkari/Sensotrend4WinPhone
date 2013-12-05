@@ -13,22 +13,13 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Security.Cryptography;
 using Sensotrend.TaltioniService;
+using Newtonsoft.Json;
 
 namespace Sensotrend
 {
     public partial class Page1 : PhoneApplicationPage
     {
-        private const string OAuthVersion = "2.0";
-
-        // OAuth signature method
-        //private const string Hmacsha1SignatureType = "HMAC-SHA1";
-
-        //private const string RequestUrl = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
-        //private const string AUTHORIZATION_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/Index";
-        //private const string TOKEN_LOCATION = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
-
-        //private const string AUTHORIZATION_URI = "https://asiakastesti.taltioni.fi/Authorize";
-        //private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/RequestToken";
+        //private const string OAuthVersion = "2.0";
 
         private const string AUTHORIZATION_URI = "https://asiakastesti.taltioni.fi/OAuth/Index";
         private const string REQUEST_TOKEN_URI = "https://asiakastesti.taltioni.fi/OAuth/RequestToken";
@@ -174,8 +165,12 @@ namespace Sensotrend
                     }
                     catch
                     {
-                        Dispatcher.BeginInvoke(() => MessageBox.Show("Unable to retrieve Access Token"));
-                        NavigationService.GoBack();
+                        Dispatcher.BeginInvoke(() => 
+                        {
+                            MessageBox.Show("Unable to retrieve Access Token");
+                            NavigationService.GoBack();
+                        });
+                        
                     }
                 }, req);
             }, request);
@@ -186,29 +181,13 @@ namespace Sensotrend
         // read from response.
         private string ExtractTokenInfo(string responseText)
         {
-            /* The response from Taltioni is in JSON and the format is:
-             {
-               "access_token":"33369431943e4fadb2629bb66a8dafa4",
-               "token_type":"taltioni_token"
-             }
-             */
 
             if (string.IsNullOrEmpty(responseText))
                 return null;
 
-            string cleanedResponse = responseText.Replace("\"", "");
+            Dictionary<string, string> tokenInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseText);
 
-            var responsePairs = (from pair in cleanedResponse.Split(',')
-                                 let bits = pair.Split(':')
-                                 where bits.Length == 2
-                                 select new KeyValuePair<string, string>(bits[0], bits[1])).ToArray();
-
-            string token = responsePairs.ElementAt(0).Value;
-            
-            /*
-            token = responsePairs
-                          .Where(kvp => kvp.Key == ACCESS_TOKEN_KEY).Select(kvp => kvp.Value).FirstOrDefault();
-           */
+            string token = tokenInfo["access_token"];
 
             return token;
         }
@@ -268,6 +247,22 @@ namespace Sensotrend
         }
      
   */
+
+        /* The token request response from Taltioni is in JSON and the format is:
+        {
+             "access_token":"33369431943e4fadb2629bb66a8dafa4",
+             "token_type":"taltioni_token"
+        }
+         http://json2csharp.com/  converted it to the folowing class:       
+        */
+
+        private class TokenInfo
+        {
+            [JsonProperty ("access_token")]
+            public string access_token { get; set; }
+            [JsonProperty("token_type")]
+            public string token_type { get; set; }
+        }
     
     }
 
