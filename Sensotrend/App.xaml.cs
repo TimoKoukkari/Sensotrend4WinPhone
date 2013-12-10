@@ -63,6 +63,63 @@ namespace Sensotrend
 
         }
 
+        /* 
+         * This sends data to Taltioni using stored access token. 
+         */
+        public enum TaltioniDataType
+        {
+            BLOOD_GLUCOSE,
+            INSULIN,
+            CARBONHYDRATE,
+            EXERCISE,
+            NOTE
+        };
+
+        /**
+         * Generates unique request ID for Taltioni OAuth request.
+         * @return
+         *     Unique request ID.
+         */
+        protected Guid getUniqueRequestID()
+        {
+            Guid requestId = new Guid();
+            Guid id = new Guid();
+            id.setGuid(UUID.randomUUID().toString());
+            requestId.setRequestId(id);
+            return requestId;
+        }
+        public static void SendToTaltioni(DateTime date, TaltioniDataType type, ValueType data)
+        {
+            HealthRecordClient.Data.ObservationItem oi = new HealthRecordClient.Data.ObservationItem();
+            oi.EffectiveDateTime = date;
+            switch (type)
+            {
+                case TaltioniDataType.BLOOD_GLUCOSE:
+                    oi.TypeId = "Glucose";
+                    oi.Unit = "mmol/l";
+                    oi.NumberValue = (double)data; 
+                    break;
+            }
+            HealthRecordClient.Data.Observation o = new HealthRecordClient.Data.Observation();
+            o.EffectiveDateTime = date;
+            o.TypeId = "BloodGlucose";
+            o.ObservationItems.SetValue(oi, 0);
+            
+            HealthRecordClient.Data.HealthRecordData hrd = new HealthRecordClient.Data.HealthRecordData();
+            hrd.Observations.SetValue(o, 0);
+
+            Guid requestId = Guid.NewGuid();
+            string timestamp = System.Xml.XmlConvert.ToString(DateTime.UtcNow, System.Xml.XmlDateTimeSerializationMode.Utc);
+            HealthRecordClient.Data.CodeFilter filter = new HealthRecordClient.Data.CodeFilter();
+            StoreHealthRecordItemsRequest request = new StoreHealthRecordItemsRequest(accessToken, Page1.APPLICATION_ID, Page1.authCode, ref requestId, timestamp, hrd, false);
+
+            HealthRecordClient.Data.StoreHealthRecordItemsResponse response;
+            var client = new TaltioniAPIClient();
+            client.StoreHealthRecordItems
+            
+            //MessageBox.Show(data);
+        }
+
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)

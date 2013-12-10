@@ -12,7 +12,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Security.Cryptography;
-using Sensotrend.TaltioniService;
+//using Sensotrend.TaltioniService;
 using Newtonsoft.Json;
 
 namespace Sensotrend
@@ -35,10 +35,10 @@ namespace Sensotrend
         private const string ACCESS_TOKEN_KEY = "access_token";
         private const string REDIRECT_URI_KEY = "redirect_uri";
 
-        private const string APPLICATION_ID = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
+        public const string APPLICATION_ID = "jk142mxe9n9mq7n7g1psp4t1gcwdn3ut";
         private const string GRANT_TYPE_AUTH_CODE = "authorization_code";
 
-        private string authCode;
+        public static string authCode;
         private string accessToken;
 
         /*

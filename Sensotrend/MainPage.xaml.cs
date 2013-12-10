@@ -38,6 +38,7 @@ namespace Sensotrend
         {
             NavigationService.Navigate(new Uri("/Meal.xaml", UriKind.Relative));
         }
+
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);

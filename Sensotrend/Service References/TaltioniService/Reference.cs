@@ -6196,6 +6196,7 @@ namespace Sensotrend.TaltioniService {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://taltioniapi.1.0.taltioni.fi", Order=1)]
         public bool AbortOnError;
+        private TaltioniService.HealthRecordData hrd;
         
         public StoreHealthRecordItemsRequest() {
         }

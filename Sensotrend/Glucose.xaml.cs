@@ -71,7 +71,7 @@ namespace Sensotrend
                 MessageBox.Show("Cannot parse " + pageContent.DataInputText);
             }
             DateTime date = (DateTime) pageContent.DateValue;          
-            MessageBox.Show("Sent to Taltioni: " + pageContent.DataInputText + " at " + date.Date);
+            App.SendToTaltioni(date, App.TaltioniDataType.BLOOD_GLUCOSE, (Type)pageContent.DataInputText);
             pageContent.DataInputText = "";
         }
 
