@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 namespace Sensotrend
 {
@@ -66,24 +67,38 @@ namespace Sensotrend
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            try
+            {
+                accessToken = (string)IsolatedStorageSettings.ApplicationSettings["Token"];
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+            } 
+            MessageBox.Show("Access granted, token: " + accessToken);
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            accessToken = (string)IsolatedStorageSettings.ApplicationSettings["Token"];
+            MessageBox.Show("Access granted, token: " + accessToken);
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            IsolatedStorageSettings.ApplicationSettings.Remove("Token");
+            IsolatedStorageSettings.ApplicationSettings.Add("Token", App.accessToken);
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            IsolatedStorageSettings.ApplicationSettings.Remove("Token");
+            IsolatedStorageSettings.ApplicationSettings.Add("Token", App.accessToken);
         }
 
         // Code to execute if a navigation fails
